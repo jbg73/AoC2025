@@ -15,9 +15,13 @@ impl Solver {
 
     pub fn solve(&mut self) -> i32 {
         self.steps.iter().fold(0, |acc, e| {
-            self.current = Executor::rotate(self.current, e);
+            println!("Step: {:?}", e);
+            let res = Executor::rotate(self.current, e);
+            self.current = res.position;
+            println!("Current clicks: {}", acc + res.zero_clicks);
+            println!("New position: {}\n", self.current);
 
-            if self.current == 0 { acc + 1 } else { acc + 0 }
+            acc + res.zero_clicks
         })
     }
 }
