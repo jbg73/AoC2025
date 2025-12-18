@@ -7,7 +7,6 @@ use crate::resolver::Solver;
 fn main() {
     let data = DataParser::parse_data("day1/data/input.txt");
 
-    // Day 1.1
     let mut solver = Solver::new(50, data);
     let result = solver.solve();
 
