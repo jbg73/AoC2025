@@ -4,6 +4,8 @@ mod scanner;
 use parser::DataParser;
 use scanner::Scanner;
 
+use crate::parser::data_parser::Range;
+
 fn main() {
     let data = DataParser::parse_data("day2/data/input.txt");
 
