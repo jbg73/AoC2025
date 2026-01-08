@@ -22,10 +22,10 @@ impl BatterySelector {
         digits
     }
 
-    fn left_selector(battery_bank: &Vec<u32>) -> (u32, usize) {
+    fn left_selector(battery_bank: &[u32]) -> (u32, usize) {
         let max_found = battery_bank
             .iter()
-            .take(battery_bank.len() - 1)
+            .take(battery_bank.len())
             .max()
             .unwrap()
             .clone();
@@ -44,5 +44,22 @@ impl BatterySelector {
             .unwrap();
 
         max_found
+    }
+
+    pub fn max_joltage_selector(battery_bank: &str, n_batteries: usize) -> u64 {
+        let mut max_joltage_bank: String = String::new();
+
+        let mut current_pos = 0;
+        while max_joltage_bank.len() < n_batteries {
+            let safety_battery_idx = battery_bank.len() - (n_batteries - max_joltage_bank.len());
+            let battery_block_digits =
+                Self::convert_to_digits(&battery_bank[current_pos..=safety_battery_idx]);
+            let next_max_joltage = Self::left_selector(&battery_block_digits[..]);
+            max_joltage_bank = max_joltage_bank + next_max_joltage.0.to_string().as_str();
+
+            current_pos = current_pos + next_max_joltage.1 + 1;
+        }
+
+        max_joltage_bank.parse::<u64>().unwrap()
     }
 }

@@ -8,7 +8,7 @@ fn main() {
 
     let mut result = 0;
     for battery_bank in data {
-        result = result + BatterySelector::select_battery(&battery_bank);
+        result = result + BatterySelector::max_joltage_selector(&battery_bank, 12);
     }
     println!("{}", result);
 }
