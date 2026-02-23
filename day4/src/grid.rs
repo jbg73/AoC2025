@@ -14,7 +14,7 @@ impl From<&char> for CellState {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct Position(pub usize, pub usize);
 
 #[derive(Debug)]
@@ -129,18 +129,29 @@ impl FactoryMap {
         adjacent_papers
     }
 
-    pub fn count_all_accessible_positions(&self) -> usize {
-        let mut accessible = 0;
+    pub fn count_all_accessible_papers(&self) -> Option<Vec<Position>> {
+        let mut accessible_papers: Vec<Position> = vec![];
+
         self.grid.iter().for_each(|row| {
             row.iter().for_each(|c| {
                 if self.get_state_in_position(&c.position) == CellState::Occupied
                     && self.count_adjacent_papers(&c.position) < 4
                 {
-                    accessible += 1;
+                    accessible_papers.push(c.position);
                 }
             })
         });
 
-        accessible
+        if accessible_papers.is_empty() {
+            return None;
+        }
+
+        Some(accessible_papers)
+    }
+
+    pub fn update_grid(&mut self, removed_papers: Vec<Position>) {
+        removed_papers
+            .iter()
+            .for_each(|p| self.grid[p.0][p.1].state = CellState::Empty);
     }
 }
