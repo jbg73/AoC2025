@@ -12,4 +12,11 @@ fn main() {
 
     let total = calculator.resolve();
     println!("Total: {}", total);
+
+    let (cephalopod_operands, cephalopod_operations) =
+        InputParser::read_cephalopod_data("day6/data/input.txt");
+
+    let cephalopod_total =
+        Calculator::resolve_cephalopod(cephalopod_operands, cephalopod_operations);
+    println!("Total cephalopod: {}", cephalopod_total);
 }

@@ -60,4 +60,16 @@ impl Calculator {
 
         total
     }
+
+    pub fn resolve_cephalopod(operands: Vec<Vec<u64>>, operations: Vec<OperationType>) -> u64 {
+        let mut total = 0;
+        operations
+            .iter()
+            .zip(operands)
+            .for_each(|(op_type, operands)| match op_type {
+                OperationType::Sum => total += operands.iter().sum::<u64>(),
+                OperationType::Multiplication => total += operands.iter().product::<u64>(),
+            });
+        total
+    }
 }
